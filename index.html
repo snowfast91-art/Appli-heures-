@@ -172,8 +172,18 @@ button{font-family:inherit;cursor:pointer}
       <div class="card">
         <div style="font-size:15px;font-weight:600;margin-bottom:12px">Exporter un rapport</div>
         <div class="field">
-          <label class="label">Sélectionner la date de debut et de fin de la semaine à exporter</label>
-          <input type="date" id="export-date" onchange="updateExportPreview()">
+          <label class="label">Date de début</label>
+          <input type="date" id="export-start" onchange="updateExportPreview()">
+        </div>
+        <div class="field">
+          <label class="label">Date de fin</label>
+          <input type="date" id="export-end" onchange="updateExportPreview()">
+        </div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:14px">
+          <button class="toggle-btn active" style="border:1px solid #d1d1d6;border-radius:10px;padding:9px 4px;font-size:12px" onclick="setExportPreset('week')">Cette semaine</button>
+          <button class="toggle-btn" style="border:1px solid #d1d1d6;border-radius:10px;padding:9px 4px;font-size:12px" onclick="setExportPreset('lastweek')">Semaine passée</button>
+          <button class="toggle-btn" style="border:1px solid #d1d1d6;border-radius:10px;padding:9px 4px;font-size:12px" onclick="setExportPreset('month')">Ce mois</button>
+          <button class="toggle-btn" style="border:1px solid #d1d1d6;border-radius:10px;padding:9px 4px;font-size:12px" onclick="setExportPreset('custom')">Personnalisé</button>
         </div>
         <div class="export-info" id="export-preview"></div>
         <button class="pdf-btn" onclick="generateReport()">Télécharger le rapport</button>
@@ -322,7 +332,9 @@ function openTech(name,idx){
   const td=toDay();
   document.getElementById("input-date").value=td;
   document.getElementById("input-date").max=td;
-  document.getElementById("export-date").value=td;
+  const ws=getWS(td),we=getWD(ws)[6];
+  document.getElementById("export-start").value=ws;
+  document.getElementById("export-end").value=we;
   show("tech");
   loadEntry(td);refreshRolling();
   document.querySelectorAll(".tab-btn").forEach((b,i)=>b.classList.toggle("active",i===0));
