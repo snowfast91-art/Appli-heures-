@@ -3,656 +3,683 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-<title>Suivi des heures – Poseurs</title>
+<title>Suivi des heures</title>
 <style>
 *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
-body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:#f2f2f7;color:#1c1c1e;min-height:100vh}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:#f2f2f7;color:#1c1c1e}
 input{font-family:inherit;font-size:16px;padding:10px 12px;border:1px solid #d1d1d6;border-radius:10px;width:100%;background:#fff;color:#1c1c1e;outline:none}
 input:focus{border-color:#378ADD;box-shadow:0 0 0 3px rgba(55,138,221,.15)}
 button{font-family:inherit;cursor:pointer}
 .page{display:none;flex-direction:column;min-height:100vh}
 .page.active{display:flex}
-.header{background:#fff;border-bottom:0.5px solid #e0e0e5;padding:14px 16px;display:flex;align-items:center;gap:10px;position:sticky;top:0;z-index:10}
-.header-title{font-size:17px;font-weight:600}
-.header-sub{font-size:12px;color:#8e8e93;margin-top:1px}
-.back-btn{background:none;border:none;font-size:22px;color:#8e8e93;padding:0 4px;line-height:1}
-.content{padding:16px;flex:1;padding-bottom:80px}
+.hdr{background:#fff;border-bottom:0.5px solid #e0e0e5;padding:14px 16px;display:flex;align-items:center;gap:10px;position:sticky;top:0;z-index:10}
+.hdr-t{font-size:17px;font-weight:600}
+.hdr-s{font-size:12px;color:#8e8e93;margin-top:1px}
+.bk{background:none;border:none;font-size:22px;color:#8e8e93;padding:0 4px;line-height:1}
+.cont{padding:16px;flex:1;padding-bottom:80px}
 .card{background:#fff;border-radius:14px;border:0.5px solid #e0e0e5;padding:16px;margin-bottom:12px}
-.label{font-size:12px;color:#8e8e93;margin-bottom:5px;display:block;font-weight:500}
-.field{margin-bottom:12px}
-.save-btn{width:100%;padding:14px;background:#1D9E75;color:#fff;border:none;border-radius:12px;font-size:16px;font-weight:600;margin-top:8px}
-.save-btn:active{opacity:.8}
-.tech-btn{display:flex;align-items:center;justify-content:space-between;width:100%;background:#fff;border:0.5px solid #e0e0e5;border-radius:14px;padding:14px 16px;margin-bottom:10px;text-align:left}
-.tech-btn:active{background:#f7f7f7}
-.avatar{width:42px;height:42px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:600;font-size:14px;flex-shrink:0}
-.badge{display:inline-block;padding:4px 10px;border-radius:8px;font-size:12px;font-weight:600;white-space:nowrap}
-.badge.ok{background:#E1F5EE;color:#085041}
-.badge.nok{background:#FCEBEB;color:#A32D2D}
-.tab-bar{display:flex;background:#e5e5ea;border-radius:10px;padding:3px;margin-bottom:16px}
-.tab-btn{flex:1;padding:8px 0;border:none;background:transparent;border-radius:8px;font-size:13px;font-weight:500;color:#8e8e93;transition:all .2s}
-.tab-btn.active{background:#fff;color:#1c1c1e;box-shadow:0 1px 3px rgba(0,0,0,.1)}
-.toggle-row{display:flex;background:#e5e5ea;border-radius:10px;padding:3px;margin-bottom:12px}
-.tgl-btn{flex:1;padding:8px 4px;border:none;background:transparent;border-radius:8px;font-size:13px;font-weight:500;color:#8e8e93;transition:all .2s}
-.tgl-btn.active{background:#fff;color:#1c1c1e;box-shadow:0 1px 3px rgba(0,0,0,.1)}
-.colis-row{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:14px}
-.colis-btn{padding:10px 4px;border:1px solid #d1d1d6;border-radius:10px;background:#fff;font-size:12px;color:#1c1c1e;text-align:center}
-.colis-btn.active{background:#E6F1FB;border-color:#378ADD;color:#0C447C;font-weight:600}
-.slot-card{background:#f7f7f7;border-radius:10px;padding:12px;margin-bottom:10px}
-.slot-title{font-size:12px;font-weight:600;color:#8e8e93;margin-bottom:8px;display:flex;justify-content:space-between;align-items:center}
-.slot-remove{background:none;border:none;font-size:16px;color:#ff3b30;padding:0;line-height:1}
-.add-slot-btn{width:100%;padding:11px;border:1px dashed #d1d1d6;border-radius:10px;background:transparent;font-size:14px;color:#378ADD;font-weight:500;margin-top:2px;margin-bottom:12px}
-.stat-box{background:#f7f7f7;border-radius:10px;padding:12px 14px;margin-top:10px}
-.stat-row{display:flex;justify-content:space-between;align-items:center;padding:3px 0;font-size:13px}
+.lbl{font-size:12px;color:#8e8e93;margin-bottom:5px;display:block;font-weight:500}
+.fld{margin-bottom:12px}
+.sbtn{width:100%;padding:14px;background:#1D9E75;color:#fff;border:none;border-radius:12px;font-size:16px;font-weight:600;margin-top:8px}
+.tbtn{display:flex;align-items:center;justify-content:space-between;width:100%;background:#fff;border:0.5px solid #e0e0e5;border-radius:14px;padding:14px 16px;margin-bottom:10px;text-align:left}
+.tbtn:active{background:#f7f7f7}
+.av{width:42px;height:42px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:600;font-size:14px;flex-shrink:0}
+.bdg{display:inline-block;padding:4px 10px;border-radius:8px;font-size:12px;font-weight:600;white-space:nowrap}
+.bdg.ok{background:#E1F5EE;color:#085041}
+.bdg.nok{background:#FCEBEB;color:#A32D2D}
+.tabs{display:flex;background:#e5e5ea;border-radius:10px;padding:3px;margin-bottom:16px}
+.tab{flex:1;padding:8px 0;border:none;background:transparent;border-radius:8px;font-size:13px;font-weight:500;color:#8e8e93}
+.tab.on{background:#fff;color:#1c1c1e;box-shadow:0 1px 3px rgba(0,0,0,.1)}
+.tog{display:flex;background:#e5e5ea;border-radius:10px;padding:3px;margin-bottom:12px}
+.togb{flex:1;padding:8px 4px;border:none;background:transparent;border-radius:8px;font-size:13px;font-weight:500;color:#8e8e93}
+.togb.on{background:#fff;color:#1c1c1e;box-shadow:0 1px 3px rgba(0,0,0,.1)}
+.cgrid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:14px}
+.cbtn{padding:10px 4px;border:1px solid #d1d1d6;border-radius:10px;background:#fff;font-size:12px;color:#1c1c1e;text-align:center}
+.cbtn.on{background:#E6F1FB;border-color:#378ADD;color:#0C447C;font-weight:600}
+.slotc{background:#f7f7f7;border-radius:10px;padding:12px;margin-bottom:10px}
+.slot-hdr{font-size:12px;font-weight:600;color:#8e8e93;margin-bottom:8px;display:flex;justify-content:space-between;align-items:center}
+.slot-rm{background:none;border:none;font-size:16px;color:#ff3b30;padding:0}
+.addslot{width:100%;padding:11px;border:1px dashed #d1d1d6;border-radius:10px;background:transparent;font-size:14px;color:#378ADD;font-weight:500;margin-top:2px;margin-bottom:12px}
+.sbox{background:#f7f7f7;border-radius:10px;padding:12px 14px;margin-top:10px}
+.srow{display:flex;justify-content:space-between;align-items:center;padding:3px 0;font-size:13px}
 .sep{border:none;border-top:0.5px solid #e0e0e5;margin:6px 0}
-.progress-bar{height:6px;background:#e0e0e5;border-radius:3px;overflow:hidden;margin:6px 0 4px}
-.progress-fill{height:100%;border-radius:3px;transition:width .4s}
-.day-row{background:#fff;border-radius:12px;border:0.5px solid #e0e0e5;padding:14px;margin-bottom:8px}
-.day-row.today{border-left:3px solid #1D9E75}
-.week-nav{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px}
-.nav-btn{background:none;border:none;font-size:22px;color:#378ADD;padding:4px 10px}
-.summary-card{background:#fff;border-radius:14px;border:0.5px solid #e0e0e5;padding:14px 16px;margin-bottom:10px;display:flex;justify-content:space-between;align-items:center}
-.ot-card{background:#fff;border-radius:14px;padding:14px 16px;margin-bottom:10px;border-left:3px solid #EF9F27;border-top:0.5px solid #e0e0e5;border-right:0.5px solid #e0e0e5;border-bottom:0.5px solid #e0e0e5}
-.export-info{background:#f7f7f7;border-radius:10px;padding:12px;margin-bottom:14px;font-size:13px;line-height:1.8;min-height:60px}
-.preset-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:14px}
-.preset-btn{padding:10px 6px;border:1px solid #d1d1d6;border-radius:10px;background:#fff;font-size:13px;font-weight:500;color:#378ADD;text-align:center}
-.preset-btn:active{background:#E6F1FB}
-.preset-btn.sel{background:#E6F1FB;border-color:#378ADD;color:#0C447C;font-weight:600}
-.dl-btn{width:100%;padding:13px;border:none;border-radius:12px;background:#378ADD;font-size:15px;font-weight:600;color:#fff}
-.dl-btn:active{opacity:.85}
+.pbar{height:6px;background:#e0e0e5;border-radius:3px;overflow:hidden;margin:6px 0 4px}
+.pfill{height:100%;border-radius:3px;transition:width .4s}
+.drow{background:#fff;border-radius:12px;border:0.5px solid #e0e0e5;padding:14px;margin-bottom:8px}
+.drow.tod{border-left:3px solid #1D9E75}
+.wnav{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px}
+.nbtn{background:none;border:none;font-size:22px;color:#378ADD;padding:4px 10px}
+.sumc{background:#fff;border-radius:14px;border:0.5px solid #e0e0e5;padding:14px 16px;margin-bottom:10px;display:flex;justify-content:space-between;align-items:center}
+.otc{background:#fff;border-radius:14px;padding:14px 16px;margin-bottom:10px;border-left:3px solid #EF9F27;border-top:0.5px solid #e0e0e5;border-right:0.5px solid #e0e0e5;border-bottom:0.5px solid #e0e0e5}
+.pgrid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:14px}
+.pbtn{padding:10px 6px;border:1px solid #d1d1d6;border-radius:10px;background:#fff;font-size:13px;font-weight:500;color:#378ADD;text-align:center}
+.pbtn:active{background:#E6F1FB}
+.pbtn.on{background:#E6F1FB;border-color:#378ADD;color:#0C447C;font-weight:600}
+.eprev{background:#f7f7f7;border-radius:10px;padding:12px;margin-bottom:14px;font-size:13px;line-height:1.8;min-height:60px}
+.dlbtn{width:100%;padding:13px;border:none;border-radius:12px;background:#378ADD;font-size:15px;font-weight:600;color:#fff}
 .hint{font-size:11px;color:#aeaeb2;margin-top:8px;line-height:1.5}
-.saved-msg{display:none;color:#1D9E75;font-size:13px;font-weight:500;margin-top:6px;text-align:center}
-.info-btn{background:none;border:1px solid #d1d1d6;border-radius:10px;padding:6px 12px;font-size:13px;color:#378ADD;font-weight:500;white-space:nowrap}
+.svd{display:none;color:#1D9E75;font-size:13px;font-weight:500;margin-top:6px;text-align:center}
+.ibtn{background:none;border:1px solid #d1d1d6;border-radius:10px;padding:6px 12px;font-size:13px;color:#378ADD;font-weight:500}
 .is{margin-bottom:18px}
 .is h2{font-size:15px;font-weight:600;margin-bottom:8px}
 .is p,.is li{font-size:13px;color:#3c3c43;line-height:1.65;margin-bottom:3px}
 .is ul{padding-left:18px}
-.box-warn{background:#FAEEDA;border-radius:10px;padding:12px;border-left:3px solid #EF9F27;margin-bottom:6px}
-.box-danger{background:#FCEBEB;border-radius:10px;padding:12px;border-left:3px solid #E24B4A;margin-bottom:6px}
-.box-ok{background:#E1F5EE;border-radius:10px;padding:12px;border-left:3px solid #1D9E75}
+.bwarn{background:#FAEEDA;border-radius:10px;padding:12px;border-left:3px solid #EF9F27;margin-bottom:6px}
+.bdang{background:#FCEBEB;border-radius:10px;padding:12px;border-left:3px solid #E24B4A;margin-bottom:6px}
+.bok{background:#E1F5EE;border-radius:10px;padding:12px;border-left:3px solid #1D9E75}
 </style>
 </head>
 <body>
 
-<!-- ACCUEIL -->
-<div class="page active" id="page-home">
-  <div class="header">
-    <div style="flex:1"><div class="header-title">Suivi des heures</div><div class="header-sub">Sélectionnez votre nom</div></div>
-    <button class="info-btn" onclick="openInfo()">Règles &amp; Lois</button>
+<div class="page active" id="p-home">
+  <div class="hdr">
+    <div style="flex:1"><div class="hdr-t">Suivi des heures</div><div class="hdr-s">Selectionnez votre nom</div></div>
+    <button class="ibtn" onclick="showInfo()">Regles &amp; Lois</button>
   </div>
-  <div class="content" id="tech-list"></div>
+  <div class="cont" id="techlist"></div>
 </div>
 
-<!-- TECHNICIEN -->
-<div class="page" id="page-tech">
-  <div class="header">
-    <button class="back-btn" onclick="goHome()">←</button>
-    <div id="tech-avatar" class="avatar" style="margin-right:2px"></div>
-    <div style="flex:1"><div class="header-title" id="tech-name-title"></div><div class="header-sub" id="tech-week-sub"></div></div>
+<div class="page" id="p-tech">
+  <div class="hdr">
+    <button class="bk" onclick="goHome()">&#8592;</button>
+    <div id="av" class="av"></div>
+    <div style="flex:1"><div class="hdr-t" id="tname"></div><div class="hdr-s" id="tsub"></div></div>
   </div>
-  <div class="content">
-    <div class="tab-bar">
-      <button class="tab-btn active" onclick="switchTab('saisie',this)">Saisie</button>
-      <button class="tab-btn" onclick="switchTab('semaine',this)">Semaine</button>
-      <button class="tab-btn" onclick="switchTab('export',this)">Export</button>
+  <div class="cont">
+    <div class="tabs">
+      <button class="tab on" onclick="switchTab('saisie',this)">Saisie</button>
+      <button class="tab" onclick="switchTab('semaine',this)">Semaine</button>
+      <button class="tab" onclick="switchTab('export',this)">Export</button>
     </div>
 
-    <!-- SAISIE -->
-    <div id="tab-saisie">
+    <div id="t-saisie">
       <div class="card">
-        <div class="field">
-          <label class="label">Date</label>
-          <input type="date" id="input-date" onchange="onDateChange()">
+        <div class="fld">
+          <label class="lbl">Date</label>
+          <input type="date" id="idate" onchange="onDateChange()">
         </div>
-        <label class="label">Mode de saisie</label>
-        <div class="toggle-row">
-          <button class="tgl-btn active" id="mode-simple" onclick="setMode('simple')">Chantier unique</button>
-          <button class="tgl-btn" id="mode-multiple" onclick="setMode('multiple')">Chantiers multiples</button>
+        <label class="lbl">Mode de saisie</label>
+        <div class="tog">
+          <button class="togb on" id="ms" onclick="setMode('s')">Chantier unique</button>
+          <button class="togb" id="mm" onclick="setMode('m')">Chantiers multiples</button>
         </div>
-        <div id="slots-container"></div>
-        <button class="add-slot-btn" id="add-slot-btn" style="display:none" onclick="addSlot()">+ Ajouter un chantier</button>
-        <label class="label">Récupération de colis à l'atelier</label>
-        <div class="colis-row">
-          <button class="colis-btn active" id="colis-none" onclick="setColis('none')">Aucun passage</button>
-          <button class="colis-btn" id="colis-avant" onclick="setColis('avant')">Avant intervention</button>
-          <button class="colis-btn" id="colis-apres" onclick="setColis('apres')">Après intervention</button>
-          <button class="colis-btn" id="colis-les_deux" onclick="setColis('les_deux')">Avant &amp; après</button>
+        <div id="slots"></div>
+        <button class="addslot" id="addslot" style="display:none" onclick="addSlot()">+ Ajouter un chantier</button>
+        <label class="lbl">Recuperation de colis a l'atelier</label>
+        <div class="cgrid">
+          <button class="cbtn on" id="c-none" onclick="setColis('none')">Aucun passage</button>
+          <button class="cbtn" id="c-avant" onclick="setColis('avant')">Avant intervention</button>
+          <button class="cbtn" id="c-apres" onclick="setColis('apres')">Apres intervention</button>
+          <button class="cbtn" id="c-deux" onclick="setColis('deux')">Avant &amp; apres</button>
         </div>
-        <div class="stat-box" id="hours-summary" style="display:none">
-          <div class="stat-row"><span style="color:#8e8e93">Temps brut</span><span style="font-weight:600" id="sum-gross"></span></div>
-          <div class="stat-row"><span style="color:#E24B4A">Pause déduite</span><span style="font-weight:600;color:#E24B4A" id="sum-pause"></span></div>
+        <div class="sbox" id="hsum" style="display:none">
+          <div class="srow"><span style="color:#8e8e93">Temps brut</span><span style="font-weight:600" id="s-gross"></span></div>
+          <div class="srow"><span style="color:#E24B4A">Pause deduite</span><span style="font-weight:600;color:#E24B4A" id="s-pause"></span></div>
           <hr class="sep">
-          <div class="stat-row"><span style="font-weight:600">Temps net</span><span style="font-weight:700;font-size:18px" id="sum-net"></span></div>
-          <div class="stat-row" id="sum-supp-row" style="display:none"><span style="color:#633806">dont heures supp. (&gt;7h)</span><span style="font-weight:600;color:#633806" id="sum-supp"></span></div>
+          <div class="srow"><span style="font-weight:600">Temps net</span><span style="font-weight:700;font-size:18px" id="s-net"></span></div>
+          <div class="srow" id="s-otrow" style="display:none"><span style="color:#633806">dont heures supp. (&gt;7h)</span><span style="font-weight:600;color:#633806" id="s-ot"></span></div>
         </div>
-        <button class="save-btn" onclick="saveEntry()">Enregistrer</button>
-        <div class="saved-msg" id="saved-msg">✓ Enregistré</div>
-        <div class="stat-box" style="margin-top:14px">
+        <button class="sbtn" onclick="saveEntry()">Enregistrer</button>
+        <div class="svd" id="svd">&#10003; Enregistre</div>
+        <div class="sbox" style="margin-top:14px">
           <div style="display:flex;justify-content:space-between;margin-bottom:4px">
-            <span style="font-size:13px;color:#8e8e93">Semaine glissante (7j nets)</span>
-            <span style="font-size:13px;font-weight:600" id="rolling-label"></span>
+            <span style="font-size:13px;color:#8e8e93">Semaine glissante (7j)</span>
+            <span style="font-size:13px;font-weight:600" id="r-lbl"></span>
           </div>
-          <div class="progress-bar"><div class="progress-fill" id="rolling-bar"></div></div>
-          <div style="font-size:12px;text-align:right;margin-top:2px" id="rolling-diff"></div>
+          <div class="pbar"><div class="pfill" id="r-bar"></div></div>
+          <div style="font-size:12px;text-align:right;margin-top:2px" id="r-diff"></div>
         </div>
       </div>
     </div>
 
-    <!-- SEMAINE -->
-    <div id="tab-semaine" style="display:none">
-      <div class="week-nav">
-        <button class="nav-btn" onclick="changeWeek(-1)">←</button>
-        <span style="font-size:13px;font-weight:500;color:#8e8e93" id="week-label"></span>
-        <button class="nav-btn" onclick="changeWeek(1)">→</button>
+    <div id="t-semaine" style="display:none">
+      <div class="wnav">
+        <button class="nbtn" onclick="changeWeek(-1)">&#8592;</button>
+        <span style="font-size:13px;font-weight:500;color:#8e8e93" id="wlbl"></span>
+        <button class="nbtn" onclick="changeWeek(1)">&#8594;</button>
       </div>
-      <div class="summary-card">
-        <div><div style="font-size:12px;color:#8e8e93">Heures nettes</div><div style="font-size:26px;font-weight:700" id="week-total"></div></div>
-        <div id="week-badge"></div>
+      <div class="sumc">
+        <div><div style="font-size:12px;color:#8e8e93">Heures nettes</div><div style="font-size:26px;font-weight:700" id="wtot"></div></div>
+        <div id="wbdg"></div>
       </div>
-      <div id="week-ot-card" class="ot-card" style="display:none">
-        <div style="font-size:13px;font-weight:600;color:#633806;margin-bottom:8px">Heures supplémentaires</div>
-        <div class="stat-row"><span style="color:#8e8e93;font-size:13px">+25% (36e–43e h)</span><span style="font-weight:600;color:#633806" id="ot-25"></span></div>
-        <div class="stat-row"><span style="color:#8e8e93;font-size:13px">+50% (44e h et +)</span><span style="font-weight:600;color:#A32D2D" id="ot-50"></span></div>
+      <div id="wot" class="otc" style="display:none">
+        <div style="font-size:13px;font-weight:600;color:#633806;margin-bottom:8px">Heures supplementaires</div>
+        <div class="srow"><span style="color:#8e8e93;font-size:13px">+25% (36e-43e h)</span><span style="font-weight:600;color:#633806" id="ot25"></span></div>
+        <div class="srow"><span style="color:#8e8e93;font-size:13px">+50% (44e h et +)</span><span style="font-weight:600;color:#A32D2D" id="ot50"></span></div>
       </div>
-      <div id="week-days"></div>
+      <div id="wdays"></div>
     </div>
 
-    <!-- EXPORT -->
-    <div id="tab-export" style="display:none">
+    <div id="t-export" style="display:none">
       <div class="card">
         <div style="font-size:15px;font-weight:600;margin-bottom:14px">Exporter un rapport</div>
-        <div class="preset-grid">
-          <button class="preset-btn" id="preset-week" onclick="applyPreset('week')">Cette semaine</button>
-          <button class="preset-btn" id="preset-lastweek" onclick="applyPreset('lastweek')">Semaine passée</button>
-          <button class="preset-btn" id="preset-month" onclick="applyPreset('month')">Ce mois</button>
-          <button class="preset-btn" id="preset-custom" onclick="applyPreset('custom')">Personnalisé</button>
+        <div class="pgrid">
+          <button class="pbtn on" id="pr-week" onclick="setPreset('week')">Cette semaine</button>
+          <button class="pbtn" id="pr-last" onclick="setPreset('last')">Semaine passee</button>
+          <button class="pbtn" id="pr-month" onclick="setPreset('month')">Ce mois</button>
+          <button class="pbtn" id="pr-custom" onclick="setPreset('custom')">Personnalise</button>
         </div>
-        <div class="field">
-          <label class="label">Du</label>
-          <input type="date" id="export-start" onchange="refreshExportPreview()">
+        <div class="fld">
+          <label class="lbl">Du</label>
+          <input type="date" id="estart" onchange="refreshPrev()">
         </div>
-        <div class="field">
-          <label class="label">Au</label>
-          <input type="date" id="export-end" onchange="refreshExportPreview()">
+        <div class="fld">
+          <label class="lbl">Au</label>
+          <input type="date" id="eend" onchange="refreshPrev()">
         </div>
-        <div class="export-info" id="export-preview">Sélectionnez une période ci-dessus.</div>
-        <button class="dl-btn" onclick="doGenerateReport()">Télécharger le rapport</button>
-        <p class="hint">Fichier HTML → ouvrir dans le navigateur → Imprimer → Enregistrer en PDF.</p>
+        <div class="eprev" id="eprev">Selectionnez une periode.</div>
+        <button class="dlbtn" onclick="doExport()">Telecharger le rapport</button>
+        <p class="hint">Fichier HTML : ouvrir dans le navigateur, Imprimer, Enregistrer en PDF.</p>
       </div>
     </div>
   </div>
 </div>
 
-<!-- INFO -->
-<div class="page" id="page-info">
-  <div class="header">
-    <button class="back-btn" onclick="closeInfo()">←</button>
-    <div><div class="header-title">Règles &amp; Lois</div><div class="header-sub">Code du travail</div></div>
+<div class="page" id="p-info">
+  <div class="hdr">
+    <button class="bk" onclick="hideInfo()">&#8592;</button>
+    <div><div class="hdr-t">Regles &amp; Lois</div><div class="hdr-s">Code du travail</div></div>
   </div>
-  <div class="content">
+  <div class="cont">
     <div class="card">
-      <div class="is"><h2>Définition</h2><p>Les heures supplémentaires sont les heures effectuées <strong>au-delà de 35h par semaine</strong>. Elles se déclenchent à partir de la <strong>36e heure</strong> et doivent être demandées ou validées par l'employeur.</p></div>
-      <div class="is"><h2>Majoration de salaire</h2><div class="box-warn"><p><strong>+25 %</strong> : de la 36e à la 43e heure</p><p><strong>+50 %</strong> : à partir de la 46e heure</p></div></div>
-      <div class="is"><h2>Durées maximales</h2><ul><li>10h par jour (sauf dérogation)</li><li>48h par semaine maximum</li><li>44h en moyenne sur 12 semaines</li></ul></div>
-      <div class="is"><h2>Validation obligatoire</h2><div class="box-danger"><p>Les heures supplémentaires doivent être <strong>demandées et validées au préalable</strong> par la hiérarchie.</p><ul style="margin-top:6px"><li>Toute heure non validée ne sera pas prise en compte.</li><li>Les heures incohérentes avec l'activité réelle ne seront pas validées.</li><li>Rester sur chantier sans autorisation n'est pas une validation implicite.</li></ul></div></div>
-      <div class="is"><h2>Pause obligatoire</h2><div class="box-warn"><p>Une pause est obligatoire toutes les <strong>6 heures de travail</strong>.</p><p>Qu'elle soit prise ou non, elle est <strong>obligatoirement déduite</strong> du temps de travail.</p><p style="margin-top:4px;font-style:italic;color:#8e8e93">La pause n'est pas forcément une pause déjeuner.</p></div></div>
-      <div class="is"><h2>Déclarations inexactes</h2><div class="box-danger"><p>Toute déclaration inexacte ou falsifiée constitue une <strong>fraude</strong> pouvant entraîner des mesures disciplinaires ou des sanctions.</p></div></div>
-      <div class="is"><div class="box-ok"><p>Le respect de ces règles garantit une gestion équitable du temps de travail, le respect du cadre légal, et la bonne organisation des chantiers.</p></div></div>
+      <div class="is"><h2>Definition</h2><p>Les heures supplementaires sont les heures effectuees <strong>au-dela de 35h par semaine</strong>. Elles se declenchent a partir de la <strong>36e heure</strong> et doivent etre validees par l'employeur.</p></div>
+      <div class="is"><h2>Majoration de salaire</h2><div class="bwarn"><p><strong>+25%</strong> : de la 36e a la 43e heure</p><p><strong>+50%</strong> : a partir de la 46e heure</p></div></div>
+      <div class="is"><h2>Durees maximales</h2><ul><li>10h par jour (sauf derogation)</li><li>48h par semaine maximum</li><li>44h en moyenne sur 12 semaines</li></ul></div>
+      <div class="is"><h2>Validation obligatoire</h2><div class="bdang"><p>Les heures supplementaires doivent etre <strong>demandees et validees au prealable</strong> par la hierarchie.</p><ul style="margin-top:6px"><li>Toute heure non validee ne sera pas prise en compte.</li><li>Les heures incoherentes avec l'activite reelle ne seront pas validees.</li><li>Rester sur chantier sans autorisation n'est pas une validation implicite.</li></ul></div></div>
+      <div class="is"><h2>Pause obligatoire</h2><div class="bwarn"><p>Une pause est obligatoire toutes les <strong>6 heures de travail</strong>. Qu'elle soit prise ou non, elle est <strong>obligatoirement deduite</strong> du temps de travail.</p></div></div>
+      <div class="is"><h2>Declarations inexactes</h2><div class="bdang"><p>Toute declaration inexacte constitue une <strong>fraude</strong> pouvant entrainer des mesures disciplinaires ou des sanctions.</p></div></div>
+      <div class="is"><div class="bok"><p>Le respect de ces regles garantit une gestion equitable du temps de travail et la bonne organisation des chantiers.</p></div></div>
     </div>
   </div>
 </div>
 
 <script>
-var TECHNICIANS = ["Ian","Jimmy","Aren","Rudy","Michel","Cédric"];
+var TECHS = ["Ian","Jimmy","Aren","Rudy","Michel","Cedric"];
 var TARGET = 35;
-var DAY_BASE = 7;
-var COLORS = [
-  {bg:"#EEEDFE",fg:"#3C3489"},{bg:"#E1F5EE",fg:"#085041"},
-  {bg:"#FAECE7",fg:"#993C1D"},{bg:"#E6F1FB",fg:"#0C447C"},
-  {bg:"#FAEEDA",fg:"#633806"},{bg:"#FBEAF0",fg:"#72243E"}
-];
-var STORAGE_KEY = "suivi_v3";
+var DAYBASE = 7;
+var BG = ["#EEEDFE","#E1F5EE","#FAECE7","#E6F1FB","#FAEEDA","#FBEAF0"];
+var FG = ["#3C3489","#085041","#993C1D","#0C447C","#633806","#72243E"];
+var KEY = "shv4";
 var cTech = null;
-var cWeekStart = null;
-var cMode = "simple";
+var cWeek = null;
+var cMode = "s";
 var cColis = "none";
-var cSlots = [{start:"",end:"",chantier:""}];
+var cSlots = null;
 var db = {};
 
-function dbLoad() { try { var r = localStorage.getItem(STORAGE_KEY); db = r ? JSON.parse(r) : {}; } catch(e) { db = {}; } }
-function dbSave() { try { localStorage.setItem(STORAGE_KEY, JSON.stringify(db)); } catch(e) {} }
-dbLoad();
+function loadDB() {
+  try {
+    var r = localStorage.getItem(KEY);
+    if (r) db = JSON.parse(r);
+  } catch(e) { db = {}; }
+}
+function saveDB() {
+  try { localStorage.setItem(KEY, JSON.stringify(db)); } catch(e) {}
+}
+loadDB();
 
-function pad(n) { return String(n).padStart(2,"0"); }
+function pad(n) { return ("0" + n).slice(-2); }
 
-function todayStr() {
+function today() {
   var d = new Date();
-  return d.getFullYear()+"-"+pad(d.getMonth()+1)+"-"+pad(d.getDate());
+  return d.getFullYear() + "-" + pad(d.getMonth()+1) + "-" + pad(d.getDate());
 }
 
-function fmtDate(s) {
+function fmt(s) {
   if (!s) return "";
-  var parts = s.split("-");
-  return parts[2]+"/"+parts[1]+"/"+parts[0];
+  var p = s.split("-");
+  return p[2] + "/" + p[1] + "/" + p[0];
 }
 
-function calcH(s, e) {
-  if (!s || !e) return 0;
-  var sp = s.split(":"), ep = e.split(":");
-  var diff = (parseInt(ep[0])*60+parseInt(ep[1])) - (parseInt(sp[0])*60+parseInt(sp[1]));
-  return diff > 0 ? diff/60 : 0;
+function calcH(a, b) {
+  if (!a || !b) return 0;
+  var ap = a.split(":"), bp = b.split(":");
+  var d = (parseInt(bp[0])*60+parseInt(bp[1])) - (parseInt(ap[0])*60+parseInt(ap[1]));
+  return d > 0 ? d/60 : 0;
 }
 
-function computeH(slots) {
-  var gross = 0;
-  for (var i=0; i<slots.length; i++) gross += calcH(slots[i].start, slots[i].end);
-  var pause = gross >= 6 ? 1 : 0;
-  var net = Math.max(0, gross - pause);
-  var ot = Math.max(0, net - DAY_BASE);
-  return {gross:gross, pause:pause, net:net, ot:ot};
+function compute(slots) {
+  var g = 0;
+  for (var i = 0; i < slots.length; i++) g += calcH(slots[i].s, slots[i].e);
+  var p = g >= 6 ? 1 : 0;
+  var n = g - p; if (n < 0) n = 0;
+  var o = n - DAYBASE; if (o < 0) o = 0;
+  return { g:g, p:p, n:n, o:o };
 }
 
-function weeklyOT(totalNet) {
-  if (totalNet <= TARGET) return {h25:0, h50:0};
-  var supp = totalNet - TARGET;
-  return {h25: Math.min(supp,8), h50: Math.max(0,supp-8)};
+function wOT(tot) {
+  if (tot <= TARGET) return { a:0, b:0 };
+  var s = tot - TARGET;
+  return { a: s > 8 ? 8 : s, b: s > 8 ? s-8 : 0 };
 }
 
-function getWeekStart(str) {
+function weekStart(str) {
   var d = new Date(str);
-  var day = d.getDay() === 0 ? 6 : d.getDay()-1;
-  d.setDate(d.getDate()-day);
-  return d.getFullYear()+"-"+pad(d.getMonth()+1)+"-"+pad(d.getDate());
+  var wd = d.getDay(); if (wd === 0) wd = 7;
+  d.setDate(d.getDate() - (wd-1));
+  return d.getFullYear() + "-" + pad(d.getMonth()+1) + "-" + pad(d.getDate());
 }
 
-function getWeekDays(ws) {
-  var days = [];
-  for (var i=0; i<7; i++) {
+function weekDays(ws) {
+  var r = [];
+  for (var i = 0; i < 7; i++) {
     var d = new Date(ws);
     d.setDate(d.getDate()+i);
-    days.push(d.getFullYear()+"-"+pad(d.getMonth()+1)+"-"+pad(d.getDate()));
+    r.push(d.getFullYear() + "-" + pad(d.getMonth()+1) + "-" + pad(d.getDate()));
   }
-  return days;
+  return r;
 }
 
-function getLast7() {
-  var days = [];
-  for (var i=6; i>=0; i--) {
+function last7() {
+  var r = [];
+  for (var i = 6; i >= 0; i--) {
     var d = new Date();
     d.setDate(d.getDate()-i);
-    days.push(d.getFullYear()+"-"+pad(d.getMonth()+1)+"-"+pad(d.getDate()));
+    r.push(d.getFullYear() + "-" + pad(d.getMonth()+1) + "-" + pad(d.getDate()));
   }
-  return days;
+  return r;
 }
 
-function getDaysInRange(startStr, endStr) {
-  var days = [];
-  var cur = new Date(startStr);
-  var end = new Date(endStr);
+function range(a, b) {
+  var r = [], cur = new Date(a), end = new Date(b);
   while (cur <= end) {
-    days.push(cur.getFullYear()+"-"+pad(cur.getMonth()+1)+"-"+pad(cur.getDate()));
+    r.push(cur.getFullYear() + "-" + pad(cur.getMonth()+1) + "-" + pad(cur.getDate()));
     cur.setDate(cur.getDate()+1);
   }
-  return days;
+  return r;
 }
 
-function totalNetForDays(tech, days) {
-  var total = 0;
-  for (var i=0; i<days.length; i++) {
-    var entry = db[tech] && db[tech][days[i]];
-    if (entry && entry.slots) total += computeH(entry.slots).net;
+function netTotal(tech, days) {
+  var t = 0;
+  for (var i = 0; i < days.length; i++) {
+    var e = db[tech] && db[tech][days[i]];
+    if (e && e.slots) t += compute(e.slots).n;
   }
-  return total;
+  return t;
 }
 
-function showPage(name) {
-  var pages = ["home","tech","info"];
-  for (var i=0; i<pages.length; i++) {
-    document.getElementById("page-"+pages[i]).classList.toggle("active", pages[i]===name);
+function showPage(id) {
+  var pages = ["p-home","p-tech","p-info"];
+  for (var i = 0; i < pages.length; i++) {
+    document.getElementById(pages[i]).classList.toggle("active", pages[i] === id);
   }
 }
 
-/* ── HOME ── */
 function renderHome() {
-  var list = document.getElementById("tech-list");
-  list.innerHTML = "";
-  for (var i=0; i<TECHNICIANS.length; i++) {
-    var name = TECHNICIANS[i];
-    var tot = totalNetForDays(name, getLast7());
-    var ok = tot >= TARGET;
-    var c = COLORS[i];
-    var btn = document.createElement("button");
-    btn.className = "tech-btn";
-    btn.innerHTML = '<div style="display:flex;align-items:center;gap:12px">'
-      +'<div class="avatar" style="background:'+c.bg+';color:'+c.fg+'">'+name.slice(0,2).toUpperCase()+'</div>'
-      +'<div><div style="font-size:16px;font-weight:600">'+name+'</div>'
-      +'<div style="font-size:12px;color:#8e8e93">'+tot.toFixed(1)+'h nettes cette semaine</div></div></div>'
-      +'<span class="badge '+(ok?"ok":"nok")+'">'+(ok?"35h ✓":(TARGET-tot).toFixed(1)+"h rest.")+'</span>';
-    (function(n,idx){ btn.onclick = function(){ openTech(n,idx); }; })(name,i);
-    list.appendChild(btn);
+  var el = document.getElementById("techlist");
+  el.innerHTML = "";
+  for (var i = 0; i < TECHS.length; i++) {
+    (function(name, idx) {
+      var tot = netTotal(name, last7());
+      var ok = tot >= TARGET;
+      var btn = document.createElement("button");
+      btn.className = "tbtn";
+      btn.innerHTML =
+        '<div style="display:flex;align-items:center;gap:12px">' +
+        '<div class="av" style="background:' + BG[idx] + ';color:' + FG[idx] + '">' + name.slice(0,2).toUpperCase() + '</div>' +
+        '<div><div style="font-size:16px;font-weight:600">' + name + '</div>' +
+        '<div style="font-size:12px;color:#8e8e93">' + tot.toFixed(1) + 'h nettes cette semaine</div></div></div>' +
+        '<span class="bdg ' + (ok ? "ok" : "nok") + '">' + (ok ? "35h &#10003;" : (TARGET-tot).toFixed(1) + "h rest.") + '</span>';
+      btn.onclick = function() { openTech(name, idx); };
+      el.appendChild(btn);
+    })(TECHS[i], i);
   }
 }
 
-function openInfo() { showPage("info"); }
-function closeInfo() { showPage("home"); renderHome(); }
+function showInfo() { showPage("p-info"); }
+function hideInfo() { showPage("p-home"); renderHome(); }
 
 function openTech(name, idx) {
   cTech = name;
-  cWeekStart = getWeekStart(todayStr());
-  var c = COLORS[idx];
-  var av = document.getElementById("tech-avatar");
-  av.style.background = c.bg; av.style.color = c.fg;
+  cWeek = weekStart(today());
+  var av = document.getElementById("av");
+  av.style.background = BG[idx];
+  av.style.color = FG[idx];
   av.textContent = name.slice(0,2).toUpperCase();
-  document.getElementById("tech-name-title").textContent = name;
-  var td = todayStr();
-  document.getElementById("input-date").value = td;
-  document.getElementById("input-date").max = td;
-  showPage("tech");
+  document.getElementById("tname").textContent = name;
+  document.getElementById("tsub").textContent = netTotal(name, last7()).toFixed(1) + "h nettes / " + TARGET + "h";
+  var td = today();
+  document.getElementById("idate").value = td;
+  document.getElementById("idate").max = td;
+  showPage("p-tech");
+  switchTab("saisie", document.querySelector(".tab.on") || document.querySelector(".tab"));
   loadEntry(td);
   refreshRolling();
-  var tabs = document.querySelectorAll(".tab-btn");
-  for (var i=0; i<tabs.length; i++) tabs[i].classList.toggle("active", i===0);
-  document.getElementById("tab-saisie").style.display = "block";
-  document.getElementById("tab-semaine").style.display = "none";
-  document.getElementById("tab-export").style.display = "none";
-  initExportTab();
+  initExport();
 }
 
-function goHome() { showPage("home"); renderHome(); }
+function goHome() { showPage("p-home"); renderHome(); }
 
-/* ── TABS ── */
-function switchTab(name, el) {
-  var tabs = ["saisie","semaine","export"];
-  for (var i=0; i<tabs.length; i++) document.getElementById("tab-"+tabs[i]).style.display = tabs[i]===name?"block":"none";
-  if (el) { var btns=document.querySelectorAll(".tab-btn"); for(var i=0;i<btns.length;i++) btns[i].classList.remove("active"); el.classList.add("active"); }
-  if (name==="semaine") renderWeek();
-  if (name==="export") initExportTab();
+function switchTab(name, btn) {
+  document.getElementById("t-saisie").style.display = name === "saisie" ? "block" : "none";
+  document.getElementById("t-semaine").style.display = name === "semaine" ? "block" : "none";
+  document.getElementById("t-export").style.display = name === "export" ? "block" : "none";
+  var tabs = document.querySelectorAll(".tab");
+  for (var i = 0; i < tabs.length; i++) tabs[i].classList.remove("on");
+  if (btn) btn.classList.add("on");
+  if (name === "semaine") renderWeek();
+  if (name === "export") initExport();
 }
 
-/* ── MODE ── */
 function setMode(m) {
   cMode = m;
-  document.getElementById("mode-simple").classList.toggle("active", m==="simple");
-  document.getElementById("mode-multiple").classList.toggle("active", m==="multiple");
-  document.getElementById("add-slot-btn").style.display = m==="multiple"?"block":"none";
-  if (m==="simple" && cSlots.length > 1) cSlots = [cSlots[0]];
-  renderSlots(); updateSummary();
+  document.getElementById("ms").classList.toggle("on", m === "s");
+  document.getElementById("mm").classList.toggle("on", m === "m");
+  document.getElementById("addslot").style.display = m === "m" ? "block" : "none";
+  if (m === "s" && cSlots.length > 1) cSlots = [cSlots[0]];
+  renderSlots();
+  updateSum();
 }
 
-/* ── COLIS ── */
 function setColis(v) {
   cColis = v;
-  var keys = ["none","avant","apres","les_deux"];
-  for (var i=0; i<keys.length; i++) document.getElementById("colis-"+keys[i]).classList.toggle("active", keys[i]===v);
-}
-
-/* ── SLOTS ── */
-function addSlot() { cSlots.push({start:"",end:"",chantier:""}); renderSlots(); }
-
-function removeSlot(i) {
-  if (cSlots.length <= 1) return;
-  cSlots.splice(i,1); renderSlots(); updateSummary();
-}
-
-function renderSlots() {
-  var C = document.getElementById("slots-container");
-  C.innerHTML = "";
-  for (var i=0; i<cSlots.length; i++) {
-    var sl = cSlots[i];
-    var isM = cMode==="multiple";
-    var div = document.createElement("div");
-    div.className = isM ? "slot-card" : "field";
-    var html = "";
-    if (isM) {
-      html += '<div class="slot-title">Chantier '+(i+1);
-      if (cSlots.length > 1) html += '<button class="slot-remove" onclick="removeSlot('+i+')">✕</button>';
-      html += '</div>';
-    }
-    html += '<label class="label">Référence chantier</label>'
-      +'<input type="text" placeholder="Ex: CH-2024-042" value="'+sl.chantier+'" oninput="updateSlot('+i+',\'chantier\',this.value)" style="margin-bottom:10px">'
-      +'<div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">'
-      +'<div><label class="label">Arrivée</label><input type="time" value="'+sl.start+'" oninput="updateSlot('+i+',\'start\',this.value)"></div>'
-      +'<div><label class="label">Départ</label><input type="time" value="'+sl.end+'" oninput="updateSlot('+i+',\'end\',this.value)"></div>'
-      +'</div>';
-    div.innerHTML = html;
-    C.appendChild(div);
+  var ids = ["none","avant","apres","deux"];
+  for (var i = 0; i < ids.length; i++) {
+    document.getElementById("c-" + ids[i]).classList.toggle("on", ids[i] === v);
   }
 }
 
-function updateSlot(i, field, val) { cSlots[i][field] = val; updateSummary(); }
+function addSlot() {
+  cSlots.push({s:"",e:"",c:""});
+  renderSlots();
+}
 
-function updateSummary() {
-  var h = computeH(cSlots);
-  var box = document.getElementById("hours-summary");
-  var hasData = false;
-  for (var i=0; i<cSlots.length; i++) { if (cSlots[i].start && cSlots[i].end) { hasData=true; break; } }
-  if (!hasData) { box.style.display="none"; return; }
+function removeSlot(i) {
+  if (cSlots.length <= 1) return;
+  cSlots.splice(i, 1);
+  renderSlots();
+  updateSum();
+}
+
+function renderSlots() {
+  var el = document.getElementById("slots");
+  el.innerHTML = "";
+  for (var i = 0; i < cSlots.length; i++) {
+    (function(idx) {
+      var sl = cSlots[idx];
+      var isM = cMode === "m";
+      var div = document.createElement("div");
+      div.className = isM ? "slotc fld" : "fld";
+      var h = "";
+      if (isM) {
+        h += '<div class="slot-hdr">Chantier ' + (idx+1);
+        if (cSlots.length > 1) h += '<button class="slot-rm" onclick="removeSlot(' + idx + ')">&#10005;</button>';
+        h += '</div>';
+      }
+      h += '<label class="lbl">Reference chantier</label>' +
+        '<input type="text" placeholder="Ex: CH-2024-042" value="' + (sl.c||"") + '" oninput="updSlot(' + idx + ',\'c\',this.value)" style="margin-bottom:10px">' +
+        '<div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">' +
+        '<div><label class="lbl">Arrivee</label><input type="time" value="' + (sl.s||"") + '" oninput="updSlot(' + idx + ',\'s\',this.value)"></div>' +
+        '<div><label class="lbl">Depart</label><input type="time" value="' + (sl.e||"") + '" oninput="updSlot(' + idx + ',\'e\',this.value)"></div>' +
+        '</div>';
+      div.innerHTML = h;
+      el.appendChild(div);
+    })(i);
+  }
+}
+
+function updSlot(i, f, v) {
+  cSlots[i][f] = v;
+  updateSum();
+}
+
+function updateSum() {
+  var h = compute(cSlots);
+  var box = document.getElementById("hsum");
+  var ok = false;
+  for (var i = 0; i < cSlots.length; i++) { if (cSlots[i].s && cSlots[i].e) { ok = true; break; } }
+  if (!ok) { box.style.display = "none"; return; }
   box.style.display = "block";
-  document.getElementById("sum-gross").textContent = h.gross.toFixed(2)+"h";
-  document.getElementById("sum-pause").textContent = h.pause > 0 ? "-1h" : "Aucune";
-  document.getElementById("sum-net").textContent = h.net.toFixed(2)+"h";
-  var sr = document.getElementById("sum-supp-row");
-  if (h.ot > 0) { sr.style.display="flex"; document.getElementById("sum-supp").textContent = "+"+h.ot.toFixed(2)+"h"; }
-  else sr.style.display = "none";
+  document.getElementById("s-gross").textContent = h.g.toFixed(2) + "h";
+  document.getElementById("s-pause").textContent = h.p > 0 ? "-1h" : "Aucune";
+  document.getElementById("s-net").textContent = h.n.toFixed(2) + "h";
+  var otrow = document.getElementById("s-otrow");
+  if (h.o > 0) {
+    otrow.style.display = "flex";
+    document.getElementById("s-ot").textContent = "+" + h.o.toFixed(2) + "h";
+  } else {
+    otrow.style.display = "none";
+  }
 }
 
-/* ── LOAD/SAVE ENTRY ── */
-function loadEntry(dateStr) {
-  var e = db[cTech] && db[cTech][dateStr];
-  cColis = e ? (e.colis||"none") : "none";
-  cMode = e ? (e.mode||"simple") : "simple";
-  cSlots = e && e.slots ? JSON.parse(JSON.stringify(e.slots)) : [{start:"",end:"",chantier:""}];
-  setMode(cMode); setColis(cColis); renderSlots(); updateSummary();
-  document.getElementById("saved-msg").style.display = "none";
+function loadEntry(ds) {
+  var e = db[cTech] && db[cTech][ds];
+  cColis = (e && e.colis) ? e.colis : "none";
+  cMode = (e && e.mode) ? e.mode : "s";
+  if (e && e.slots) {
+    cSlots = JSON.parse(JSON.stringify(e.slots));
+  } else {
+    cSlots = [{s:"",e:"",c:""}];
+  }
+  setMode(cMode);
+  setColis(cColis);
+  renderSlots();
+  updateSum();
+  document.getElementById("svd").style.display = "none";
 }
 
-function onDateChange() { loadEntry(document.getElementById("input-date").value); }
+function onDateChange() {
+  loadEntry(document.getElementById("idate").value);
+}
 
 function saveEntry() {
-  var dateStr = document.getElementById("input-date").value;
+  var ds = document.getElementById("idate").value;
   if (!db[cTech]) db[cTech] = {};
-  var h = computeH(cSlots);
-  db[cTech][dateStr] = {mode:cMode, slots:JSON.parse(JSON.stringify(cSlots)), colis:cColis, gross:h.gross, pause:h.pause, net:h.net, ot:h.ot};
-  dbSave();
-  var msg = document.getElementById("saved-msg");
-  msg.style.display = "block";
-  setTimeout(function(){ msg.style.display="none"; }, 2000);
+  var h = compute(cSlots);
+  db[cTech][ds] = {
+    mode: cMode,
+    slots: JSON.parse(JSON.stringify(cSlots)),
+    colis: cColis,
+    g: h.g, p: h.p, n: h.n, o: h.o
+  };
+  saveDB();
+  var svd = document.getElementById("svd");
+  svd.style.display = "block";
+  setTimeout(function() { svd.style.display = "none"; }, 2000);
   refreshRolling();
-  document.getElementById("tech-week-sub").textContent = totalNetForDays(cTech,getLast7()).toFixed(1)+"h nettes / "+TARGET+"h";
+  document.getElementById("tsub").textContent = netTotal(cTech, last7()).toFixed(1) + "h nettes / " + TARGET + "h";
 }
 
 function refreshRolling() {
-  var tot = totalNetForDays(cTech, getLast7());
-  var pct = Math.min((tot/TARGET)*100, 100);
-  document.getElementById("rolling-label").textContent = tot.toFixed(1)+"h / "+TARGET+"h";
-  var bar = document.getElementById("rolling-bar");
-  bar.style.width = pct+"%";
+  var tot = netTotal(cTech, last7());
+  var pct = tot / TARGET * 100; if (pct > 100) pct = 100;
+  document.getElementById("r-lbl").textContent = tot.toFixed(1) + "h / " + TARGET + "h";
+  var bar = document.getElementById("r-bar");
+  bar.style.width = pct + "%";
   bar.style.background = tot >= TARGET ? "#1D9E75" : "#378ADD";
   var diff = tot - TARGET;
-  var el = document.getElementById("rolling-diff");
+  var el = document.getElementById("r-diff");
   el.style.color = diff >= 0 ? "#085041" : "#A32D2D";
-  el.textContent = diff >= 0 ? "+"+diff.toFixed(1)+"h au-dessus de l'objectif" : Math.abs(diff).toFixed(1)+"h restantes";
+  el.textContent = diff >= 0 ? "+" + diff.toFixed(1) + "h au-dessus de l'objectif" : Math.abs(diff).toFixed(1) + "h restantes";
 }
 
-/* ── SEMAINE ── */
-function changeWeek(dir) {
-  var d = new Date(cWeekStart);
-  d.setDate(d.getDate()+dir*7);
-  cWeekStart = d.getFullYear()+"-"+pad(d.getMonth()+1)+"-"+pad(d.getDate());
+function changeWeek(d) {
+  var dt = new Date(cWeek);
+  dt.setDate(dt.getDate() + d*7);
+  cWeek = dt.getFullYear() + "-" + pad(dt.getMonth()+1) + "-" + pad(dt.getDate());
   renderWeek();
 }
 
 function renderWeek() {
-  var days = getWeekDays(cWeekStart);
-  document.getElementById("week-label").textContent = "Sem. "+fmtDate(cWeekStart)+" → "+fmtDate(days[6]);
-  var tot = totalNetForDays(cTech, days);
-  document.getElementById("week-total").textContent = tot.toFixed(1)+"h";
+  var days = weekDays(cWeek);
+  document.getElementById("wlbl").textContent = "Sem. " + fmt(cWeek) + " > " + fmt(days[6]);
+  var tot = netTotal(cTech, days);
+  document.getElementById("wtot").textContent = tot.toFixed(1) + "h";
   var ok = tot >= TARGET;
-  document.getElementById("week-badge").innerHTML = '<span class="badge '+(ok?"ok":"nok")+'">'+(ok?"Objectif atteint":(TARGET-tot).toFixed(1)+"h rest.")+'</span>';
-  var ot = weeklyOT(tot);
-  var otCard = document.getElementById("week-ot-card");
-  if (ot.h25 > 0 || ot.h50 > 0) {
-    otCard.style.display = "block";
-    document.getElementById("ot-25").textContent = ot.h25.toFixed(2)+"h";
-    document.getElementById("ot-50").textContent = ot.h50.toFixed(2)+"h";
-  } else otCard.style.display = "none";
-  var today = todayStr();
-  var C = document.getElementById("week-days");
-  C.innerHTML = "";
-  var colisLbl = {none:"",avant:"Atelier avant",apres:"Atelier après",les_deux:"Atelier avant & après"};
-  for (var i=0; i<days.length; i++) {
+  document.getElementById("wbdg").innerHTML = '<span class="bdg ' + (ok?"ok":"nok") + '">' + (ok ? "Objectif atteint" : (TARGET-tot).toFixed(1) + "h rest.") + '</span>';
+  var ot = wOT(tot);
+  var wot = document.getElementById("wot");
+  if (ot.a > 0 || ot.b > 0) {
+    wot.style.display = "block";
+    document.getElementById("ot25").textContent = ot.a.toFixed(2) + "h";
+    document.getElementById("ot50").textContent = ot.b.toFixed(2) + "h";
+  } else { wot.style.display = "none"; }
+  var td = today();
+  var el = document.getElementById("wdays");
+  el.innerHTML = "";
+  var clbl = {none:"",avant:"Atelier avant",apres:"Atelier apres",deux:"Atelier avant & apres"};
+  for (var i = 0; i < days.length; i++) {
     var d = days[i];
     var e = db[cTech] && db[cTech][d];
-    var h = e ? computeH(e.slots||[]) : {net:0,ot:0};
-    var isToday = d===today;
-    var chantiersHtml = "";
+    var h = e ? compute(e.slots||[]) : {n:0,o:0};
+    var isT = d === td;
+    var ch = "";
     if (e && e.slots) {
-      if (e.mode==="multiple") {
-        for (var j=0; j<e.slots.length; j++) {
+      if (e.mode === "m") {
+        for (var j = 0; j < e.slots.length; j++) {
           var sl = e.slots[j];
-          chantiersHtml += '<div style="font-size:12px;color:#8e8e93">'+(sl.chantier||"?")+" : "+(sl.start||"?")+"–"+(sl.end||"?")+" ("+calcH(sl.start,sl.end).toFixed(2)+"h)</div>";
+          ch += '<div style="font-size:12px;color:#8e8e93">' + (sl.c||"?") + " : " + (sl.s||"?") + "-" + (sl.e||"?") + " (" + calcH(sl.s,sl.e).toFixed(2) + "h)</div>";
         }
       } else {
-        var sl0 = e.slots[0];
-        if (sl0 && sl0.chantier) chantiersHtml += '<div style="font-size:12px;color:#8e8e93">Chantier : '+sl0.chantier+'</div>';
-        if (sl0 && sl0.start) chantiersHtml += '<div style="font-size:12px;color:#8e8e93">'+sl0.start+' → '+sl0.end+'</div>';
+        var s0 = e.slots[0];
+        if (s0 && s0.c) ch += '<div style="font-size:12px;color:#8e8e93">Chantier : ' + s0.c + '</div>';
+        if (s0 && s0.s) ch += '<div style="font-size:12px;color:#8e8e93">' + s0.s + ' > ' + s0.e + '</div>';
       }
     }
-    var cl = e && e.colis && e.colis!=="none" ? colisLbl[e.colis] : "";
-    var div = document.createElement("div");
-    div.className = "day-row"+(isToday?" today":"");
-    div.innerHTML = '<div style="display:flex;justify-content:space-between;align-items:flex-start">'
-      +'<div style="flex:1;margin-right:8px">'
-      +'<div style="font-size:14px;font-weight:600">'+fmtDate(d)+(isToday?" · Aujourd'hui":"")+'</div>'
-      +chantiersHtml
-      +(cl?'<div style="font-size:12px;color:#378ADD;margin-top:2px">'+cl+'</div>':"")
-      +(!e?'<div style="font-size:12px;color:#aeaeb2;font-style:italic">Non renseigné</div>':"")
-      +'</div>'
-      +'<div style="text-align:right;flex-shrink:0">'
-      +'<div style="font-size:20px;font-weight:700;color:'+(h.net>0?"#1c1c1e":"#aeaeb2")+'">'+(h.net>0?h.net.toFixed(2)+"h":"—")+'</div>'
-      +(h.ot>0?'<div style="font-size:11px;color:#633806">+'+h.ot.toFixed(2)+'h supp.</div>':"")
-      +'</div></div>';
-    C.appendChild(div);
+    var cl = e && e.colis && e.colis !== "none" ? clbl[e.colis] : "";
+    var row = document.createElement("div");
+    row.className = "drow" + (isT ? " tod" : "");
+    row.innerHTML =
+      '<div style="display:flex;justify-content:space-between;align-items:flex-start">' +
+      '<div style="flex:1;margin-right:8px">' +
+      '<div style="font-size:14px;font-weight:600">' + fmt(d) + (isT ? " - Aujourd'hui" : "") + '</div>' +
+      ch +
+      (cl ? '<div style="font-size:12px;color:#378ADD;margin-top:2px">' + cl + '</div>' : "") +
+      (!e ? '<div style="font-size:12px;color:#aeaeb2;font-style:italic">Non renseigne</div>' : "") +
+      '</div>' +
+      '<div style="text-align:right;flex-shrink:0">' +
+      '<div style="font-size:20px;font-weight:700;color:' + (h.n>0?"#1c1c1e":"#aeaeb2") + '">' + (h.n>0?h.n.toFixed(2)+"h":"--") + '</div>' +
+      (h.o>0?'<div style="font-size:11px;color:#633806">+'+h.o.toFixed(2)+'h supp.</div>':"") +
+      '</div></div>';
+    el.appendChild(row);
   }
 }
 
-/* ── EXPORT ── */
-function initExportTab() {
-  var ws = getWeekStart(todayStr());
-  var we = getWeekDays(ws)[6];
-  document.getElementById("export-start").value = ws;
-  document.getElementById("export-end").value = we;
-  var btns = document.querySelectorAll(".preset-btn");
-  for (var i=0;i<btns.length;i++) btns[i].classList.remove("sel");
-  document.getElementById("preset-week").classList.add("sel");
-  refreshExportPreview();
+function initExport() {
+  var ws = weekStart(today());
+  var we = weekDays(ws)[6];
+  document.getElementById("estart").value = ws;
+  document.getElementById("eend").value = we;
+  var ids = ["pr-week","pr-last","pr-month","pr-custom"];
+  for (var i = 0; i < ids.length; i++) document.getElementById(ids[i]).classList.remove("on");
+  document.getElementById("pr-week").classList.add("on");
+  refreshPrev();
 }
 
-function applyPreset(p) {
+function setPreset(p) {
   var d = new Date();
   var s, e;
-  if (p==="week") {
-    s = getWeekStart(todayStr());
-    e = getWeekDays(s)[6];
-  } else if (p==="lastweek") {
-    var lw = new Date(d); lw.setDate(lw.getDate()-7);
-    s = getWeekStart(lw.getFullYear()+"-"+pad(lw.getMonth()+1)+"-"+pad(lw.getDate()));
-    e = getWeekDays(s)[6];
-  } else if (p==="month") {
-    s = d.getFullYear()+"-"+pad(d.getMonth()+1)+"-01";
+  if (p === "week") {
+    s = weekStart(today());
+    e = weekDays(s)[6];
+  } else if (p === "last") {
+    var lw = new Date(d);
+    lw.setDate(lw.getDate()-7);
+    s = weekStart(lw.getFullYear()+"-"+pad(lw.getMonth()+1)+"-"+pad(lw.getDate()));
+    e = weekDays(s)[6];
+  } else if (p === "month") {
+    s = d.getFullYear() + "-" + pad(d.getMonth()+1) + "-01";
     var last = new Date(d.getFullYear(), d.getMonth()+1, 0);
-    e = last.getFullYear()+"-"+pad(last.getMonth()+1)+"-"+pad(last.getDate());
-  } else {
-    // custom : juste on enlève la sélection
+    e = last.getFullYear() + "-" + pad(last.getMonth()+1) + "-" + pad(last.getDate());
   }
-  if (s) { document.getElementById("export-start").value = s; document.getElementById("export-end").value = e; }
-  var ids = ["preset-week","preset-lastweek","preset-month","preset-custom"];
-  var pid = "preset-"+p;
-  for (var i=0;i<ids.length;i++) document.getElementById(ids[i]).classList.toggle("sel", ids[i]===pid);
-  refreshExportPreview();
+  if (s) {
+    document.getElementById("estart").value = s;
+    document.getElementById("eend").value = e;
+  }
+  var ids = ["pr-week","pr-last","pr-month","pr-custom"];
+  var pid = "pr-" + p;
+  for (var i = 0; i < ids.length; i++) {
+    document.getElementById(ids[i]).classList.toggle("on", ids[i] === pid);
+  }
+  refreshPrev();
 }
 
-function refreshExportPreview() {
-  var startVal = document.getElementById("export-start").value;
-  var endVal = document.getElementById("export-end").value;
-  var prev = document.getElementById("export-preview");
-  if (!startVal || !endVal) { prev.innerHTML = "Sélectionnez une période."; return; }
-  if (new Date(startVal) > new Date(endVal)) { prev.innerHTML = '<span style="color:#E24B4A">La date de fin doit être après la date de début.</span>'; return; }
-  var days = getDaysInRange(startVal, endVal);
-  var tot = totalNetForDays(cTech, days);
-  var ot = weeklyOT(tot);
+function refreshPrev() {
+  var sv = document.getElementById("estart").value;
+  var ev = document.getElementById("eend").value;
+  var ep = document.getElementById("eprev");
+  if (!sv || !ev) { ep.innerHTML = "Selectionnez une periode."; return; }
+  if (new Date(sv) > new Date(ev)) { ep.innerHTML = '<span style="color:#E24B4A">La date de fin doit etre apres la date de debut.</span>'; return; }
+  var days = range(sv, ev);
+  var tot = netTotal(cTech, days);
+  var ot = wOT(tot);
   var filled = 0;
-  for (var i=0;i<days.length;i++) { if (db[cTech] && db[cTech][days[i]]) filled++; }
-  var html = "<strong>"+cTech+"</strong><br>"
-    +"Période : <strong>"+fmtDate(startVal)+" → "+fmtDate(endVal)+"</strong> ("+days.length+" jour(s))<br>"
-    +"Heures nettes : <strong>"+tot.toFixed(2)+"h</strong>";
-  if (days.length >= 5) html += " / "+TARGET+"h objectif";
-  if (ot.h25 > 0) html += "<br>H.Supp +25% : "+ot.h25.toFixed(2)+"h";
-  if (ot.h50 > 0) html += "<br>H.Supp +50% : "+ot.h50.toFixed(2)+"h";
-  html += "<br>"+filled+" jour(s) renseigné(s) sur "+days.length;
-  prev.innerHTML = html;
+  for (var i = 0; i < days.length; i++) { if (db[cTech] && db[cTech][days[i]]) filled++; }
+  var html = "<strong>" + cTech + "</strong><br>" +
+    "Periode : <strong>" + fmt(sv) + " au " + fmt(ev) + "</strong> (" + days.length + " jours)<br>" +
+    "Heures nettes : <strong>" + tot.toFixed(2) + "h</strong>";
+  if (days.length >= 5) html += " / " + TARGET + "h objectif";
+  if (ot.a > 0) html += "<br>H.Supp +25% : " + ot.a.toFixed(2) + "h";
+  if (ot.b > 0) html += "<br>H.Supp +50% : " + ot.b.toFixed(2) + "h";
+  html += "<br>" + filled + " jour(s) renseigne(s) sur " + days.length;
+  ep.innerHTML = html;
 }
 
-function doGenerateReport() {
-  var startVal = document.getElementById("export-start").value;
-  var endVal = document.getElementById("export-end").value;
-  if (!startVal || !endVal || !cTech) return;
-  if (new Date(startVal) > new Date(endVal)) return;
-  var days = getDaysInRange(startVal, endVal);
-  var tot = totalNetForDays(cTech, days);
-  var ot = weeklyOT(tot);
-  var colisMap = {none:"—", avant:"Atelier avant", apres:"Atelier après", les_deux:"Avant & après"};
+function doExport() {
+  var sv = document.getElementById("estart").value;
+  var ev = document.getElementById("eend").value;
+  if (!sv || !ev || !cTech) return;
+  if (new Date(sv) > new Date(ev)) return;
+  var days = range(sv, ev);
+  var tot = netTotal(cTech, days);
+  var ot = wOT(tot);
+  var clbl = {none:"--",avant:"Atelier avant",apres:"Atelier apres",deux:"Avant & apres"};
   var rows = "";
-  for (var i=0; i<days.length; i++) {
+  for (var i = 0; i < days.length; i++) {
     var d = days[i];
     var entry = db[cTech] && db[cTech][d];
-    var h = entry ? computeH(entry.slots||[]) : {gross:0,pause:0,net:0,ot:0};
-    var ch = "—", hor = "—";
+    var h = entry ? compute(entry.slots||[]) : {g:0,p:0,n:0,o:0};
+    var ch = "--", hor = "--";
     if (entry && entry.slots) {
-      if (entry.mode==="multiple") {
-        var chArr=[],horArr=[];
-        for (var j=0;j<entry.slots.length;j++) { chArr.push(entry.slots[j].chantier||"?"); horArr.push((entry.slots[j].start||"?")+"–"+(entry.slots[j].end||"?")); }
-        ch=chArr.join(" / "); hor=horArr.join(" / ");
+      if (entry.mode === "m") {
+        var ca = [], ha = [];
+        for (var j = 0; j < entry.slots.length; j++) {
+          ca.push(entry.slots[j].c||"?");
+          ha.push((entry.slots[j].s||"?") + "-" + (entry.slots[j].e||"?"));
+        }
+        ch = ca.join(" / "); hor = ha.join(" / ");
       } else {
-        var sl0 = entry.slots[0];
-        ch = sl0 ? (sl0.chantier||"—") : "—";
-        hor = sl0 && sl0.start ? sl0.start+"–"+sl0.end : "—";
+        var s0 = entry.slots[0];
+        if (s0) { ch = s0.c||"--"; hor = s0.s ? s0.s+"-"+s0.e : "--"; }
       }
     }
-    var colisLabel = entry && entry.colis ? (colisMap[entry.colis]||"—") : "—";
-    rows += "<tr>"
-      +"<td>"+fmtDate(d)+"</td>"
-      +"<td>"+hor+"</td>"
-      +"<td>"+ch+"</td>"
-      +"<td>"+(h.gross>0?h.gross.toFixed(2)+"h":"—")+"</td>"
-      +"<td>"+(h.pause>0?"-1h":"—")+"</td>"
-      +"<td><strong>"+(h.net>0?h.net.toFixed(2)+"h":"—")+"</strong></td>"
-      +"<td style=\"color:"+(h.ot>0?"#633806":"#999")+"\">"+(h.ot>0?"+"+h.ot.toFixed(2)+"h":"—")+"</td>"
-      +"<td>"+colisLabel+"</td>"
-      +"</tr>";
+    var cl = (entry && entry.colis) ? (clbl[entry.colis]||"--") : "--";
+    rows += "<tr><td>" + fmt(d) + "</td><td>" + hor + "</td><td>" + ch + "</td>" +
+      "<td>" + (h.g>0?h.g.toFixed(2)+"h":"--") + "</td>" +
+      "<td>" + (h.p>0?"-1h":"--") + "</td>" +
+      "<td><strong>" + (h.n>0?h.n.toFixed(2)+"h":"--") + "</strong></td>" +
+      "<td style=\"color:" + (h.o>0?"#633806":"#999") + "\">" + (h.o>0?"+"+h.o.toFixed(2)+"h":"--") + "</td>" +
+      "<td>" + cl + "</td></tr>";
   }
-  var otRow = (ot.h25>0||ot.h50>0) ? '<tr class="to"><td colspan="3">Détail heures supp.</td><td colspan="2"></td><td colspan="2">+25% : '+ot.h25.toFixed(2)+'h &nbsp;|&nbsp; +50% : '+ot.h50.toFixed(2)+'h</td><td></td></tr>' : "";
-  var html = '<!DOCTYPE html><html><head><meta charset="utf-8"><title>Rapport '+cTech+'</title>'
-    +'<style>body{font-family:Arial,sans-serif;margin:32px;color:#222}h1{font-size:20px;margin-bottom:4px}p{font-size:13px;color:#555;margin:2px 0}'
-    +'table{width:100%;border-collapse:collapse;margin-top:20px;font-size:12px}th{background:#f0f0f0;padding:8px 6px;text-align:left;border-bottom:2px solid #ccc}'
-    +'td{padding:8px 6px;border-bottom:1px solid #eee;vertical-align:top}.tr{background:#f7f7f7;font-weight:bold}.to{background:#FAEEDA;color:#633806;font-weight:bold}'
-    +'.ok{display:inline-block;padding:3px 10px;border-radius:6px;font-size:12px;font-weight:bold;background:#E1F5EE;color:#085041}'
-    +'.nok{display:inline-block;padding:3px 10px;border-radius:6px;font-size:12px;font-weight:bold;background:#FCEBEB;color:#A32D2D}'
-    +'footer{margin-top:24px;font-size:11px;color:#aaa}@media print{body{margin:16px}}</style></head><body>'
-    +'<h1>Rapport – '+cTech+'</h1>'
-    +'<p><strong>Période :</strong> '+fmtDate(startVal)+' au '+fmtDate(endVal)+' ('+days.length+' jour(s))</p>'
-    +'<p><strong>Généré le :</strong> '+fmtDate(todayStr())+'</p>'
-    +'<p style="margin-top:8px"><span class="'+(tot>0?"ok":"nok")+'">Total net : '+tot.toFixed(2)+'h</span></p>'
-    +'<table><thead><tr><th>Date</th><th>Horaires</th><th>Chantier(s)</th><th>Brut</th><th>Pause</th><th>Net</th><th>H.Supp</th><th>Atelier</th></tr></thead>'
-    +'<tbody>'+rows
-    +'<tr class="tr"><td colspan="3">Total période</td><td colspan="2"></td><td><strong>'+tot.toFixed(2)+'h</strong></td><td>'+(ot.h25>0||ot.h50>0?"+"+（tot-TARGET).toFixed(2)+"h":"—")+'</td><td></td></tr>'
-    +otRow
-    +'</tbody></table>'
-    +'<footer>Généré automatiquement – Suivi des heures poseurs</footer></body></html>';
+  var otrow = (ot.a>0||ot.b>0) ?
+    '<tr style="background:#FAEEDA;color:#633806;font-weight:bold"><td colspan="3">Heures supp. detail</td><td colspan="2"></td><td colspan="2">+25%: '+ot.a.toFixed(2)+'h | +50%: '+ot.b.toFixed(2)+'h</td><td></td></tr>' : "";
+  var diff = tot - TARGET;
+  var html = '<!DOCTYPE html><html><head><meta charset="utf-8"><title>Rapport '+cTech+'</title>' +
+    '<style>body{font-family:Arial,sans-serif;margin:32px;color:#222}h1{font-size:20px;margin-bottom:4px}' +
+    'p{font-size:13px;color:#555;margin:2px 0}table{width:100%;border-collapse:collapse;margin-top:20px;font-size:12px}' +
+    'th{background:#f0f0f0;padding:8px 6px;text-align:left;border-bottom:2px solid #ccc}' +
+    'td{padding:8px 6px;border-bottom:1px solid #eee;vertical-align:top}' +
+    '.tot{background:#f7f7f7;font-weight:bold}' +
+    '.ok{display:inline-block;padding:3px 10px;border-radius:6px;font-size:12px;font-weight:bold;background:#E1F5EE;color:#085041}' +
+    '.nok{display:inline-block;padding:3px 10px;border-radius:6px;font-size:12px;font-weight:bold;background:#FCEBEB;color:#A32D2D}' +
+    'footer{margin-top:24px;font-size:11px;color:#aaa}@media print{body{margin:16px}}</style></head><body>' +
+    '<h1>Rapport - ' + cTech + '</h1>' +
+    '<p><strong>Periode :</strong> ' + fmt(sv) + ' au ' + fmt(ev) + ' (' + days.length + ' jours)</p>' +
+    '<p><strong>Genere le :</strong> ' + fmt(today()) + '</p>' +
+    '<p style="margin-top:8px"><span class="' + (tot>0?"ok":"nok") + '">Total net : ' + tot.toFixed(2) + 'h</span></p>' +
+    '<table><thead><tr><th>Date</th><th>Horaires</th><th>Chantier(s)</th><th>Brut</th><th>Pause</th><th>Net</th><th>H.Supp</th><th>Atelier</th></tr></thead>' +
+    '<tbody>' + rows +
+    '<tr class="tot"><td colspan="3">Total periode</td><td colspan="2"></td>' +
+    '<td><strong>' + tot.toFixed(2) + 'h</strong></td>' +
+    '<td>' + (diff > 0 ? "+" + diff.toFixed(2) + "h" : "--") + '</td><td></td></tr>' +
+    otrow + '</tbody></table>' +
+    '<footer>Genere automatiquement - Suivi des heures poseurs</footer></body></html>';
+
   var blob = new Blob([html], {type:"text/html"});
   var url = URL.createObjectURL(blob);
   var a = document.createElement("a");
   a.href = url;
-  a.download = "rapport_"+cTech+"_"+startVal+"_"+endVal+".html";
+  a.download = "rapport_" + cTech + "_" + sv + "_" + ev + ".html";
   document.body.appendChild(a);
   a.click();
   document.body.removeChild(a);
